@@ -1,5 +1,6 @@
 # Intelij IDEA files
 *.iml
+.idea/
 
 # Obj files
 target/
