@@ -1,6 +1,6 @@
-package com.ivanturkin.cloud.app.taco;
+package com.ivanturkin.cloud.app.taco.controller;
 
-import com.ivanturkin.cloud.app.taco.repository.IngredientRepository;
+import  com.ivanturkin.cloud.app.taco.repository.IngredientRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,11 @@ public class HomeControllerTest {
     private IngredientRepository ingredientRepository;
 
     @Test
-    public void testHomePage() throws Exception {
+    public void shouldSendWelcomePageContent_WhenValidGetRequest() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
                 .andExpect(view().name("home"))
                 .andExpect(content().string(
-                        containsString("Welcome!")
-                ));
+                        containsString("Welcome!")))
+                .andExpect(status().isOk());
     }
 }
