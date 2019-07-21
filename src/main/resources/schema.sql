@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS orders (
     deliveryName VARCHAR(50) NOT NULL,
     deliveryStreet VARCHAR(50) NOT NULL,
     deliveryCity VARCHAR(50) NOT NULL,
-    deliveryState VARCHAR(2) NOT NULL,
+    deliveryState VARCHAR(40) NOT NULL,
     deliveryZip VARCHAR(10) NOT NULL,
     ccNumber VARCHAR(16) NOT NULL,
     ccExpiration VARCHAR(5) NOT NULL,
