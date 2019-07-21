@@ -26,7 +26,7 @@ public class HomeControllerTest {
     private IngredientRepository ingredientRepository;
 
     @Test
-    public void shouldSendWelcomePageContent_WhenValidGetRequest() throws Exception {
+    public void shouldSendWelcomePageContent_whenValidGetRequest() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(view().name("home"))
                 .andExpect(content().string(

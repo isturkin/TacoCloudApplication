@@ -1,17 +1,17 @@
 package com.ivanturkin.cloud.app.taco.controller;
 
 import com.ivanturkin.cloud.app.taco.domain.Ingredient;
+import com.ivanturkin.cloud.app.taco.domain.Order;
 import com.ivanturkin.cloud.app.taco.domain.Taco;
 import com.ivanturkin.cloud.app.taco.repository.IngredientRepository;
+import com.ivanturkin.cloud.app.taco.repository.TacoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -21,13 +21,44 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("design")
+@RequestMapping("/design")
+@SessionAttributes("order")
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
+    private final TacoRepository tacoRepository;
+
+    @ModelAttribute(name = "order")
+    public Order order() {
+        return new Order();
+    }
 
     @GetMapping
     public String showDesignForm(Model model) {
+        fillModelWithIngredientList(model);
+
+        model.addAttribute("design", new Taco());
+
+        return "design";
+    }
+
+    @PostMapping
+    public String processDesign(@Valid @ModelAttribute("design") Taco taco, Model model, Errors errors,
+                                @ModelAttribute("order") Order order) {
+        if (errors.hasErrors()) {
+            fillModelWithIngredientList(model);
+            log.error("There are some errors during processing your design: " + errors);
+            return "design";
+        }
+
+        Taco saved = tacoRepository.save(taco);
+        order.getTacos().add(saved);
+
+        log.info("Processing design: " + taco);
+        return "redirect:/orders/current";
+    }
+
+    private void fillModelWithIngredientList(Model model) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepository.findAll().forEach(i -> ingredients.add(i));
 
@@ -36,20 +67,6 @@ public class DesignTacoController {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByType(ingredients, type));
         }
-
-        model.addAttribute("design", new Taco());
-
-        return "design";
-    }
-
-    @PostMapping
-    public String processDesign(@Valid Taco design, Errors errors) {
-        if (errors.hasErrors()) {
-            return "design";
-        }
-
-        log.info("Processing design: " + design);
-        return "redirect:/orders/current";
     }
 
     private List<Ingredient> filterByType(List<Ingredient> ingredients, Ingredient.Type type) {
