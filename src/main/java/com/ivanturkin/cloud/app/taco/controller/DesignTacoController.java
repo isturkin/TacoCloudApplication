@@ -7,7 +7,6 @@ import com.ivanturkin.cloud.app.taco.repository.IngredientRepository;
 import com.ivanturkin.cloud.app.taco.repository.TacoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -43,18 +42,18 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute("design") Taco taco, Model model, Errors errors,
+    public String processDesign(@Valid @ModelAttribute("design") Taco taco, Errors errors, Model model,
                                 @ModelAttribute("order") Order order) {
         if (errors.hasErrors()) {
             fillModelWithIngredientList(model);
-            log.error("There are some errors during processing your design: " + errors);
+            log.error("Errors occurred during processing your design: " + errors);
             return "design";
         }
 
         Taco saved = tacoRepository.save(taco);
         order.getTacos().add(saved);
 
-        log.info("Processing design: " + taco);
+        log.info("Processing design: " + saved);
         return "redirect:/orders/current";
     }
 
