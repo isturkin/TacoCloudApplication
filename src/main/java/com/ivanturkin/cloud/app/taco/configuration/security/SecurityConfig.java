@@ -27,7 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
+        httpSecurity.authorizeRequests()
+            .antMatchers("/design", "/orders")
+                .hasRole("ROLE_USER")
+            .antMatchers("/", "/**").permitAll();
     }
 
     @Bean
