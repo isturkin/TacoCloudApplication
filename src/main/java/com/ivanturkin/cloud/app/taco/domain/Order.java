@@ -49,6 +49,9 @@ public class Order implements Serializable {
 
     private Date placedDate;
 
+    @ManyToOne
+    private User user;
+
     @ManyToMany(targetEntity = Taco.class)
     @JoinTable(joinColumns = {@JoinColumn(name = "order_id")},
                 inverseJoinColumns = {@JoinColumn(name = "taco_id")})
