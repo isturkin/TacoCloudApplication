@@ -31,9 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("USER")
             .antMatchers("/", "/**").permitAll()
             .and()
-            .formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/design");
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/design")
+            .and()
+                .logout()
+                .logoutSuccessUrl("/");
     }
 
     @Bean
