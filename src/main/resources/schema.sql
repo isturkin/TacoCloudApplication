@@ -1,3 +1,15 @@
+CREATE TABLE IF NOT EXISTS users (
+    id LONG IDENTITY PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    street VARCHAR(50) NOT NULL,
+    zip VARCHAR(10) NOT NULL,
+    phone_number VARCHAR(15)
+);
+
 CREATE TABLE IF NOT EXISTS ingredients (
     id VARCHAR(4) PRIMARY KEY,
     name VARCHAR(25) NOT NULL,

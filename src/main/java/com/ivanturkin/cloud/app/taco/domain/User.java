@@ -1,5 +1,7 @@
 package com.ivanturkin.cloud.app.taco.domain;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,22 +25,29 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private final String username;
 
+    @NotBlank
     private final String password;
 
+    @NotBlank
     private final String fullName;
 
+    @NotBlank
     private final String street;
 
+    @NotBlank
     private final String city;
 
+    @NotBlank
     private final String state;
 
+    @NotBlank
     private final String zip;
 
+    @NotBlank
     private final String phoneNumber;
-
 
 
     @Override

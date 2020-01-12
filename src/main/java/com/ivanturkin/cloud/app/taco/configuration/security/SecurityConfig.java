@@ -20,17 +20,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
             .antMatchers("/design", "/orders")
-                .hasRole("ROLE_USER")
-            .antMatchers("/", "/**").permitAll();
+                .hasRole("USER")
+            .antMatchers("/", "/**").permitAll()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+            .defaultSuccessUrl("/design");
     }
 
     @Bean
