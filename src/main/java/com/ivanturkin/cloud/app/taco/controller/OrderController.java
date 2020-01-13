@@ -1,17 +1,22 @@
 package com.ivanturkin.cloud.app.taco.controller;
 
+import com.ivanturkin.cloud.app.taco.configuration.properties.OrderProperties;
 import com.ivanturkin.cloud.app.taco.domain.Order;
 import com.ivanturkin.cloud.app.taco.domain.User;
 import com.ivanturkin.cloud.app.taco.repository.OrderRepository;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
-import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -20,9 +25,22 @@ import javax.validation.Valid;
 public class OrderController {
 
     private OrderRepository orderRepository;
+    private OrderProperties orderProperties;
 
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository, OrderProperties orderProperties) {
         this.orderRepository = orderRepository;
+        this.orderProperties = orderProperties;
+    }
+
+    @GetMapping
+    public String ordersForUser(
+        @AuthenticationPrincipal User user, Model model) {
+
+        Pageable pageRequest = PageRequest.of(0, orderProperties.getPageSize());
+        model.addAttribute("orders",
+            orderRepository.findByUserOrderByPlacedDateDesc(user, pageRequest));
+
+        return "orderList";
     }
 
     @GetMapping("/current")
