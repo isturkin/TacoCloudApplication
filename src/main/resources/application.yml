@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: 9090
+
+taco:
+  orders:
+    pageSize: 10
