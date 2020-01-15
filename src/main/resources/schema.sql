@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS orders (
     cc_number VARCHAR(16) NOT NULL,
     cc_expiration VARCHAR(5) NOT NULL,
     cvv VARCHAR(3) NOT NULL,
-    placed_date TIMESTAMP NOT NULL
+    placed_date TIMESTAMP NOT NULL,
+    user_id LONG NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS orders_tacos (
@@ -55,3 +56,6 @@ ADD FOREIGN KEY (order_id) REFERENCES orders(id);
 
 ALTER TABLE orders_tacos
 ADD FOREIGN KEY (taco_id) REFERENCES tacos(id);
+
+ALTER TABLE orders
+ADD FOREIGN KEY (user_id) REFERENCES users(id);

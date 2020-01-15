@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Taco Cloud</title>
+        <link rel="stylesheet" type="text/css" href="/styles/styles.css"/>
+    </head>
+
+    <body>
+        <div class="grid">
+            <h3>Recent orders</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Placed date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${orders.empty}">
+                    <td colspan="2">You haven't orders yet</td>
+                </tr>
+                <tr th:each="order: ${orders}">
+                    <td><span th:text="${order.id}"> Title </span></td>
+                    <td><span th:text="${order.placedDate}"> Author </span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+
+</html>
