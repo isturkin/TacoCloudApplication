@@ -1,6 +1,7 @@
 package com.ivanturkin.cloud.app.taco.controller;
 
 import com.ivanturkin.cloud.app.taco.repository.IngredientRepository;
+import com.ivanturkin.cloud.app.taco.repository.TacoRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class DesignControllerTests {
 
     @MockBean
     private IngredientRepository ingredientRepository;
+
+    @MockBean
+    private TacoRepository tacoRepository;
 
     @Test
     public void shouldSendDesignPage_whenValidGetRequest() throws Exception {
