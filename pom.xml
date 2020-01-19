@@ -12,7 +12,7 @@
 
     <groupId>com.ivanturkin</groupId>
     <artifactId>taco-cloud-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>taco-cloud-application</name>
     <description>Demo project for Spring Boot</description>
     <packaging>pom</packaging>
@@ -26,6 +26,7 @@
     <modules>
         <module>taco-cloud-main</module>
         <module>taco-cloud-angular-ui</module>
+        <module>taco-cloud-api</module>
     </modules>
 
 </project>
